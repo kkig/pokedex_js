@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:700|Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:700|Lato&display=swap');
 
 body {
   height: 100vh;
   width: 100vw;
 
   --title-font: 'Nunito', sans-serif;
-  --basic-font: 'Open Sans', sans-serif;
+  --basic-font: 'Lato', sans-serif;
 }
 
 label {
@@ -18,10 +18,7 @@ label {
 
   min-height: 100vh;
   font-size: 14px;
-  display: grid;
   background-color: gainsboro;
-/*  grid-template-columns: repeat(6, 1fr);*/
-  grid-template-rows: var(--navbar-height) auto;
   font-family: var(--basic-font);
 }
 
@@ -37,6 +34,10 @@ h1 {
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+
+.main-container {
+  padding: 0 10%;
 }
 
 /*

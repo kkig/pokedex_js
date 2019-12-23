@@ -1,0 +1,9 @@
+/*
+** --basic-font: 'Open Sans', sans-serif;
+**
+** check App.css for detail
+*/
+
+p.MuiTypography-body1 {
+    font-family: var(--basic-font);
+}

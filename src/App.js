@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import AppHeader from '../src/components/AppHeader';
+import AppHeader from './containers/AppHeader';
+import AppBody from './containers/AppBody';
 
 function App() {
   return (
@@ -9,7 +10,9 @@ function App() {
       <header className="App-header">
         <AppHeader />
       </header>
-      
+      <main className="main-container">
+        <AppBody /> 
+      </main>
     </div>
   );
 }
