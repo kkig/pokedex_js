@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './PokeList.css';
 
@@ -8,6 +8,9 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+// List data from PokeAPI
+import { useList } from '../API/useList';
 
 
 const PokeList = () => {
@@ -34,7 +37,7 @@ const PokeList = () => {
                 </Typography>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
-            
+
             <ExpansionPanel expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}

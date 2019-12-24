@@ -1,0 +1,9 @@
+.more-btn-section {
+    display: flex; 
+    justify-content: center;
+    padding: 1em 0;
+}
+
+.more-btn:hover {
+    color: white;
+}

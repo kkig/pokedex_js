@@ -10,11 +10,22 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 const PageBtn = () => {
     return (
         <div className="pagination-btn-section">
-            <Button variant="outlined" color="primary" size="small" className="pagination-btn">
+            <Button variant="outlined" 
+                color="primary" 
+                size="small" 
+                className="pagination-btn"
+                onClick={() => console.log('Prev Clicked')}
+            >
                 <NavigateBeforeIcon fontSize="small" />
                 Prev
             </Button>
-            <Button variant="outlined" color="primary" size="small" className="pagination-btn">
+            <Button 
+                variant="outlined" 
+                color="primary" 
+                size="small" 
+                className="pagination-btn"
+                onClick={() => console.log('Next clicked')}
+            >
                 Next 
                 <NavigateNextIcon fontSize="small" />
             </Button>
