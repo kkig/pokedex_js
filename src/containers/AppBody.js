@@ -24,21 +24,25 @@ const AppBody = () => {
         let newListArray = [];
         let index = listData.length + 1;
 
-        listData.map(item => newListArray.push({...item, id: index++}));
+        listData.map(item => listData.push({...item, id: index++}));
+        //listData.map(item => listData[index]({...item, id: index++}));
 
-        console.log(newListArray);
+        //newListArray[0].id ? setList(newListArray) : null;
+        //console.log(newListArray);
         newListArray = [];
     };
 
-    listData.length > 0 && !listData.id && addId();
+    //listData.length > 0 && !listData.id && addId();
 
     //listData.length > 0 && console.log(listData);
 
     //listData.length > 0 && listData[0].id && console.log(listData);
 
     useEffect(() => {
-        getListData();
-    }, [])
+        listData.length > 0 && console.log(listData);
+    }, [listData])
+
+    useEffect(() => getListData(), []);
 
     return (
         <div>
