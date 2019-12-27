@@ -1,9 +1,0 @@
-.pagination-btn-section {
-    display: flex; 
-    justify-content: space-between;
-    padding: 1em 0;
-}
-
-.pagination-btn:hover {
-    color: #3f51b5;
-}

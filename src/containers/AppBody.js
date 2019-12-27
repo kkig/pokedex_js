@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import PokeList from '../components/PokeList';
 //import PageBtn from '../components/PageBtn';
@@ -6,6 +6,7 @@ import ShowMoreBtn from '../components/ShowMoreBtn';
 
 const AppBody = () => {
     const [ listData, setList ] = useState([]);
+    const [ fetchedList, setfetchedList ] = useState([]);
     
     const getListData = () => {
         const endpoint = `https://pokeapi.co/api/v2/pokemon/?offset=${listData.length}&limit=20`;
@@ -13,10 +14,12 @@ const AppBody = () => {
         fetch(endpoint)
         .then(res => res.json())
         .then(data => {
-            setList(data.results)
-            console.log('PokeAPI List fetched')
+            setfetchedList(data.results);
+            console.log('PokeAPI List fetched');
         })
         .catch(err => console.log(err));
+
+        //setIDNeccesary(true);
         
     };
 
@@ -24,30 +27,25 @@ const AppBody = () => {
         let newListArray = [];
         let index = listData.length + 1;
 
-        listData.map(item => listData.push({...item, id: index++}));
+        fetchedList.map(item => listData.push({...item, id: index++}));
         //listData.map(item => listData[index]({...item, id: index++}));
 
-        //newListArray[0].id ? setList(newListArray) : null;
-        //console.log(newListArray);
+        newListArray.length > 0 && setList(newListArray);
         newListArray = [];
+        setfetchedList([]);
+        console.log(listData);
+        //setIDNeccesary(false);
     };
 
-    //listData.length > 0 && !listData.id && addId();
+    fetchedList.length > 0 && !fetchedList[0].id && addId();
 
-    //listData.length > 0 && console.log(listData);
-
-    //listData.length > 0 && listData[0].id && console.log(listData);
-
-    useEffect(() => {
-        listData.length > 0 && console.log(listData);
-    }, [listData])
-
-    useEffect(() => getListData(), []);
+    // Fetch initial Poke list
+    listData.length === 0 && getListData();
 
     return (
         <div>
             <PokeList 
-                listData={listData.length > 0 && listData[0].id ? listData : null}
+                listData={listData}
             />
             <ShowMoreBtn />
         </div>
