@@ -7,6 +7,7 @@ export const usePokeList = listLength => {
     
     // API call for pokemon list
     const fetchListData = () => {
+        
         const itemQuantity = store.PokeCount > 0 ? `offset=${store.PokeCount}&` : ``;
         const endpoint = `https://pokeapi.co/api/v2/pokemon/?${itemQuantity}limit=20`;
 
@@ -17,17 +18,15 @@ export const usePokeList = listLength => {
         .then(data => {
             setFetchedList(data.results);
             console.log('PokeAPI List fetched');
-            //console.log(data.results)
         })
         .catch(err => console.log(err));
         
     };
 
     const getListData = () => {
-        //console.log(listData.length);
-        console.log(`Poke Count: ${store.PokeCount}`)
         fetchListData();
     };
+
 
     useEffect(() => {
 
