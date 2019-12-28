@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { useLocalStore } from 'mobx-react';
 
 import StoreContext from './StoreContext';
 
 const StoreProvider = ({children}) => {
-    const [ fetchedList, setFetchedList ] = useState([]);
+    //const [ fetchedList, setFetchedList ] = useState([]);
 
     const store = useLocalStore(() => ({
         pokeData: [],
         addNewList: newList => {
-            store.pokeData = [...store.pokeData, ...newList]
+            store.pokeData = [...store.pokeData, ...newList];
         },
         get PokeCount() {
             return store.pokeData.length;
         },
         isListRequested: true,
-        toggleListRequest: () => store.isListRequested = !store.isListRequested,
+        toggleListRequest() {
+            console.log(store.isListRequested);
+            store.isListRequested = !store.isListRequested;
+        }
 
     }));
+
+    /*
     
     const fetchListData = () => {
         const itemQuantity = store.PokeCount > 0 ? `offset=${store.PokeCount}&` : ``;
@@ -47,19 +52,23 @@ const StoreProvider = ({children}) => {
         store.toggleListRequest();
         setFetchedList([]);
         //newListArray = [];
-        
     };
 
     fetchedList.length > 0 && addId();
 
     // Fetch initial Poke list
-    store.isListRequested && fetchListData();
+    //store.PokeCount === 0 && fetchListData();
 
     store.PokeCount > 0 && console.log(store.pokeData);
 
     useEffect(() => {
         console.log(store.isListRequested)
     }, [store.isListRequested])
+
+    !store.isListRequested && console.log('Hello!')
+
+    */
+
 
     return (
         <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
