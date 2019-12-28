@@ -7,7 +7,7 @@ export const usePokeList = listLength => {
     
     // API call for pokemon list
     const fetchListData = () => {
-        
+
         const itemQuantity = store.PokeCount > 0 ? `offset=${store.PokeCount}&` : ``;
         const endpoint = `https://pokeapi.co/api/v2/pokemon/?${itemQuantity}limit=20`;
 
@@ -35,7 +35,7 @@ export const usePokeList = listLength => {
             let newListArray = [];
             let index = store.PokeCount + 1;
     
-            fetchedList.map(item => newListArray.push({...item, id: index++}));
+            fetchedList.map(item => newListArray.push({...item, id: index++, detail: []}));
     
             newListArray.length > 0 && store.addNewList(newListArray);
             setFetchedList([]);
