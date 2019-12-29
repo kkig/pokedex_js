@@ -17,7 +17,6 @@ const StoreProvider = ({children}) => {
         },
         addDetail(id, detailArray) {
             store.pokeData[id - 1].detail = detailArray;
-            console.log(store.pokeData[id - 1]);
         }
     }));
 

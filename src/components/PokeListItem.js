@@ -7,9 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Component
-import PokeDetail from '../components/PokeDetail';
+import PokeDetail from './PokeDetail/PokeDetail';
 
 const PokeListItem = props => {
+
     return (
         <ExpansionPanel 
             expanded={props.expanded === `panel${props.item.id}`} 

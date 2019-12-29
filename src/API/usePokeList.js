@@ -14,12 +14,15 @@ export const usePokeList = listLength => {
         console.log(endpoint);
 
         fetch(endpoint)
-        .then(res => res.json())
-        .then(data => {
-            setFetchedList(data.results);
-            console.log('PokeAPI List fetched');
-        })
-        .catch(err => console.log(err));
+            .then(res => res.json())
+            .then(data => {
+                data.results.length > 0 ? 
+                setFetchedList(data.results) : 
+                console.log('PokeAPI List fetch not successful');
+                
+                console.log('PokeAPI List fetched');
+            })
+            .catch(err => console.log(err));
         
     };
 

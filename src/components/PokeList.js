@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 
+import { useObserver } from 'mobx-react';
+
 // CSS
 import './PokeList.css';
 
@@ -9,6 +11,17 @@ import StoreContext from '../stores/StoreContext';
 
 // Material UI
 import Laoding from '../MaterialUI/Loading';
+
+class PokeDetail {
+    constructor(orderNr, types, abilities, stats, moves, sprites) {
+        this.orderNr = orderNr;
+        this.types = types;
+        this.abilities = abilities;
+        this.stats = stats;
+        this.moves = moves;
+        this.sprites = sprites;
+    }
+};
 
 const PokeList = props => {
     
@@ -26,7 +39,19 @@ const PokeList = props => {
         const fetchDetailData = () => {
             fetch(item.url)
                 .then(res => res.json())
-                .then(data => setFetchedDetail(data))
+                .then(data => {
+                    setFetchedDetail(
+                        new PokeDetail(
+                            data.order, 
+                            data.types.map(item => item.type.name), 
+                            data.abilities.map(item => item.ability.name), 
+                            data.stats, 
+                            data.moves.map(item => item.move.name), 
+                            data.sprites))
+                    //orderNr, type, abilities, stats, moves
+                    console.log(data);
+                    console.log('Poke detail fetched');
+                })
                 .catch(err => console.log(err))
         };
 
@@ -48,21 +73,21 @@ const PokeList = props => {
 
     //props.listData.length > 0 && console.log(props.listData);
 
-    return (
+    return useObserver(() => (
         !props.listData || props.listData.length <= 0 ? 
         <Laoding /> :
 
         <div>
             {props.listData.map(item => 
                 <PokeListItem 
-                    key={item.id}
+                    key={item.name}
                     handleChange={handleChange}
                     expanded={expanded}
                     item={item}
                 />
             )}
         </div>
-    );
+    ));
 };
 
 export default PokeList;

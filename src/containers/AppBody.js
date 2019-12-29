@@ -1,6 +1,5 @@
  import React, { useContext } from 'react';
 
-import { useObserver } from 'mobx-react';
 import StoreContext from '../stores/StoreContext';
 
 // Components
@@ -17,7 +16,7 @@ const AppBody = () => {
     store.PokeCount === 0 && fetchedList.length === 0 && getListData();
     store.PokeCount > 0 && fetchedList.length === 0 && console.log(store.pokeData); 
 
-    return useObserver(() => (
+    return (
         <div>
             <PokeList 
                 listData={store.pokeData}
@@ -25,7 +24,7 @@ const AppBody = () => {
             <ShowMoreBtn handleClick={() => getListData()}/>
         </div>
 
-    ));
+    );
 };
 
 export default AppBody;
