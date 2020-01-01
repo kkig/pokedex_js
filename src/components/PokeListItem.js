@@ -7,7 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Component
-import PokeDetail from './PokeDetail/PokeDetail';
+import PokeDetail from './PokeDetail/PokeDetails';
+import './PokeListItem.css';
 
 const PokeListItem = props => {
 
@@ -22,17 +23,13 @@ const PokeListItem = props => {
                     className="poke-list-name"
                     id={`panel${props.item.id}bh-header`}
                 >
-                    <Typography 
-                    style={{
-                        textTransform: "capitalize",
-                        fontWeight: 600
-                        }}
-                    >
+                    <Typography className="poke-list-title">
                         { props.item.name }
                     </Typography>
                 </ExpansionPanelSummary>
                 
                 <PokeDetail 
+                    selectedID={props.selectedID}
                     item={props.item}
                 />
 

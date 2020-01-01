@@ -14,7 +14,6 @@ const AppBody = () => {
     const { fetchedList, getListData } = usePokeList();
 
     store.PokeCount === 0 && fetchedList.length === 0 && getListData();
-    store.PokeCount > 0 && fetchedList.length === 0 && console.log(store.pokeData); 
 
     return (
         <div>

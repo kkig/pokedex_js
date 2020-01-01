@@ -1,0 +1,76 @@
+div.MuiExpansionPanelDetails-root {
+    display: grid;
+    column-gap: 1em;
+    grid-template-columns: 1fr;
+}
+
+div.poke-image-section {
+    margin: 0 auto;
+    grid-column: 1 / -1;
+}
+
+/*
+div.pokemon-info-table > div {
+    display: flex;
+    flex-wrap: wrap;
+}
+*/
+
+.data-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-bottom: 1em;
+}
+
+.data-title {
+    padding-right: 1em;
+    margin-bottom: 0;
+    justify-self: end;
+}
+
+.data-text {
+    text-transform: capitalize;
+}
+
+
+/*
+div.pokemon-info-table {    
+    grid-column: 1 / -1;
+}
+
+
+td {
+    vertical-align: top;
+}
+*/
+
+.poke-detail-text {
+    display: inline-block;
+    padding-right: 1em;
+}
+
+.poke-stat-detail {
+    display: inherit;
+}
+
+@media only screen and (min-width: 768px) {
+    
+    div.MuiExpansionPanelDetails-root {
+        grid-template-columns: 1fr 5fr;
+    }
+
+    div.poke-image-section {
+        grid-column: 1 / 2;
+    }
+    
+
+    .data-row {
+        grid-template-columns: 1fr 8fr;
+    }
+
+    /*
+    div.pokemon-info-table {
+        grid-column: 2 / -1;
+    }
+    */
+}

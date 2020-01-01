@@ -9,14 +9,22 @@ const StoreProvider = ({children}) => {
 
     const store = useLocalStore(() => ({
         pokeData: [],
+        evolChain: [],
         addNewList: newList => {
             store.pokeData = [...store.pokeData, ...newList];
+            //console.log(newList);
         },
         get PokeCount() {
             return store.pokeData.length;
         },
         addDetail(id, detailArray) {
             store.pokeData[id - 1].detail = detailArray;
+            console.log(detailArray);
+            console.log('Detail updated');
+        },
+        addEvolChain(newChain) {
+            store.evolChain.push(newChain);
+            console.log('Chain pushed');
         }
     }));
 
