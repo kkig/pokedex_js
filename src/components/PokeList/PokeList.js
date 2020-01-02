@@ -1,18 +1,18 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { useObserver } from 'mobx-react';
 
 // CSS
 import './PokeList.css';
 
-import PokeDetail from '../classes/PokeDetailClass';
+import PokeDetail from '../../classes/PokeDetailClass';
 
 // Components
 import PokeListItem from './PokeListItem';
-import StoreContext from '../stores/StoreContext';
+import StoreContext from '../../stores/StoreContext';
 
 // Material UI
-import Laoding from '../MaterialUI/Loading';
+import Laoding from '../../MaterialUI/Loading';
 
 const PokeList = props => {
     
@@ -40,7 +40,6 @@ const PokeList = props => {
                         data.sprites,   // img
                         data.species.url    // url for species data
                         ))
-                console.log(data);
                 console.log('Poke detail fetched');
             })
             .catch(err => console.log(err))
@@ -48,7 +47,6 @@ const PokeList = props => {
 
     const fetchEvolURL = URL => {
         const endpoint = URL;
-        console.log(endpoint);
 
         fetch(endpoint)
             .then(res => res.json())
@@ -62,95 +60,62 @@ const PokeList = props => {
 
                 setEvolURL(fetchedEvolURL);
                 
-                //console.log(store.evolChain.filter(item => item.evolURL === fetchedEvolURL));
             })
         
-        /*
-        fetch(endpoint)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.chain.evolves_to);
-                data.chain.evolves_to.map(item => console.log(item.species));
-            })
-        */
     };
 
     const getDetailData = item => {
         console.log(item);
         setSelectedID(item.id);
-        //store.addDetail(item.id, fetchedDetail);
 
         fetchDetailData(item);
     };
 
     const fetchEvolChain = () => {
-        console.log(evolURL);
 
         fetch(evolURL)
             .then(res => res.json())
             .then(data => {
                 const chainData = data.chain;
 
-                console.log(chainData);
+                let evoChain = [];
+                let evoData = chainData;
+                    
+                do {
+                    let evoDetails = evoData['evolution_details'][0];
+                    
+                    evoChain.push({
+                        "pokemon_name": evoData.species.name,
+                        "min_level": !evoDetails ? 1 : evoDetails.min_level,
+                        "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
+                        "item": !evoDetails ? null : evoDetails.item
+                    });
+                    
+                    evoData = evoData['evolves_to'][0];
+                } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
 
-            let evoChain = [];
-            let evoData = chainData;
-                
-            do {
-                let evoDetails = evoData['evolution_details'][0];
-                
-                evoChain.push({
-                    "pokemon_name": evoData.species.name,
-                    "min_level": !evoDetails ? 1 : evoDetails.min_level,
-                    "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
-                    "item": !evoDetails ? null : evoDetails.item
-                });
-                
-                evoData = evoData['evolves_to'][0];
-            } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+                const evolInfo = { evolURL: evolURL, evolutions: evoChain };
 
-            const evolInfo = { evolURL: evolURL, evolutions: evoChain };
+                store.addEvolChain(evolInfo);
+                store.addDetail(selectedID, { ...fetchedDetail, evolChain: evolInfo });
 
-            //console.log({ ...fetchedDetail, evolChain: evolInfo })
-            
-            console.log(evolInfo);
-
-            store.addEvolChain(evolInfo);
-            store.addDetail(selectedID, { ...fetchedDetail, evolChain: evolInfo });
-
-            }) // End of fetch()
+            }) 
+            .catch(err => console.log(err)) // End of fetch()
     };
 
     const handleChange = (panel, item) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
 
         isExpanded && item.detail.length === 0 && getDetailData(item);
-        //isExpanded && console.log(store.pokeData.filter(item => item.id === id));
 
     };
 
-    fetchedDetail && fetchEvolURL(fetchedDetail.speciesURL);
-
-    useEffect(() => {
-        //fetchedDetail && console.log(fetchedDetail);
-        //selectedID && fetchedDetail && store.addDetail(selectedID, fetchedDetail);
-    }, [store, fetchedDetail, selectedID])
-
-    //props.listData.length > 0 && console.log(props.listData);
-    //evolURL && console.log(evolURL);
-    useEffect(() => {
-        //console.log(store.evolChain.hasOwnProperty(evolURL));
-        /*
-        evolURL && store.evolChain.filter(item => item.evolURL === evolURL).length === 0 && fetchEvolChain();
-        console.log(store.evolChain);
-        */
-    }, [evolURL])
+    !!fetchedDetail && !!expanded && fetchEvolURL(fetchedDetail.speciesURL);
 
     return useObserver(() => (
-        !props.listData || props.listData.length <= 0 ? 
-        <Laoding /> :
+        !!props.listData && props.listData.length > 0 ? 
 
-        <div>
+        (<div>
             {props.listData.map(item => 
                 <PokeListItem 
                     key={item.name}
@@ -161,7 +126,9 @@ const PokeList = props => {
                     item={item}
                 />
             )}
-        </div>
+        </div> ):
+
+        <Laoding /> 
     ));
 };
 

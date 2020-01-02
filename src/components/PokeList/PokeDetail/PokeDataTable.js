@@ -3,7 +3,7 @@ import React from 'react';
 import './PokeDetails.css';
 
 const PokeDataTable = props => {
-    props.item.detail.evolChain && console.log(props.item.detail.evolChain.evolutions);
+    //props.item.detail.evolChain && console.log(props.item.detail.evolChain.evolutions);
 
     return (
         <div className="pokemon-info-table">

@@ -3,7 +3,7 @@
 import StoreContext from '../stores/StoreContext';
 
 // Components
-import PokeList from '../components/PokeList';
+import PokeList from '../components/PokeList/PokeList';
 import ShowMoreBtn from '../components/ShowMoreBtn';
 
 // API for Pokemon list 
