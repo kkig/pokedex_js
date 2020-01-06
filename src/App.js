@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 
-import AppHeader from './containers/AppHeader';
-import AppBody from './containers/AppBody';
+import AppHeader from './components/AppHeader';
+import AppBody from './components/AppBody';
 
 import StoreProvider from './stores/PokeStore';
 

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 // Component
-import PokeDetail from './PokeDetail/PokeDetails';
+import PokeDetail from './PokeListItem/PokeDetails';
 import './PokeListItem.css';
 
 const PokeListItem = props => {

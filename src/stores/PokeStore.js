@@ -5,14 +5,12 @@ import { useLocalStore } from 'mobx-react';
 import StoreContext from './StoreContext';
 
 const StoreProvider = ({children}) => {
-    //const [ fetchedList, setFetchedList ] = useState([]);
 
     const store = useLocalStore(() => ({
         pokeData: [],
         evolChain: [],
         addNewList: newList => {
             store.pokeData = [...store.pokeData, ...newList];
-            //console.log(newList);
         },
         get PokeCount() {
             return store.pokeData.length;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './PokeDetails.css';
-import PokeDataTable from './PokeDataTable';
+import PokeDataTable from '../PokeDataTable';
 
 // Material UI
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';

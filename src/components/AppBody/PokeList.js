@@ -8,7 +8,7 @@ import './PokeList.css';
 import PokeDetail from '../../classes/PokeDetailClass';
 
 // Components
-import PokeListItem from './PokeListItem';
+import PokeListItem from './PokeList/PokeListItem';
 import StoreContext from '../../stores/StoreContext';
 
 // Material UI
