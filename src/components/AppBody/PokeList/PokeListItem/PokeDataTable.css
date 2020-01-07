@@ -1,0 +1,46 @@
+.data-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-bottom: 1em;
+}
+
+.data-title {
+    padding-right: 1em;
+    margin-bottom: 0;
+    justify-self: start;
+}
+
+.data-text {
+    text-transform: capitalize;
+}
+
+.not-avairable-text {
+    color: darkgrey;
+}
+
+.poke-detail-text {
+    display: inline-block;
+    padding-right: 1em;
+}
+
+.poke-stat-detail {
+    display: inherit;
+}
+
+.evo-level-text {
+    color: darkgrey;
+    padding: 0 .25em;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+    .data-row {
+        grid-template-columns: 1fr 8fr;
+    }
+
+    .data-title {
+        justify-self: end;
+    }
+
+}

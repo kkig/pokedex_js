@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { useObserver } from 'mobx-react';
 
 // Material UI
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -10,31 +12,47 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PokeDetail from './PokeListItem/PokeDetails';
 import './PokeListItem.css';
 
-const PokeListItem = props => {
+import StoreContext from '../../../stores/StoreContext';
 
-    return (
+// Material UI
+import Laoding from '../../../MaterialUI/Loading';
+
+const PokeListItem = props => {
+    
+    const store = useContext(StoreContext);
+    let selectedPokemon = store.pokeData.filter(item => item.id === props.selectedID)[0];
+
+    !!selectedPokemon && 
+    props.item.id === selectedPokemon.id && 
+    console.log(selectedPokemon);
+    
+
+    return useObserver(() => (
         <ExpansionPanel 
-            expanded={props.expanded === `panel${props.item.id}`} 
-            onChange={props.handleChange(`panel${props.item.id}`, props.item)}
+            expanded={props.expanded === `panel${props.item.name}`} 
+            onChange={props.handleChange(`panel${props.item.name}`, props.item)}
         >
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`panel${props.item.id}bh-content`}
+                    aria-controls={`panel${props.item.name}bh-content`}
                     className="poke-list-name"
-                    id={`panel${props.item.id}bh-header`}
+                    id={`panel${props.item.name}bh-header`}
                 >
                     <Typography className="poke-list-title">
                         { props.item.name }
                     </Typography>
                 </ExpansionPanelSummary>
                 
+                {props.selectedID ? 
                 <PokeDetail 
                     selectedID={props.selectedID}
                     item={props.item}
-                />
+                /> :
+                <Laoding />
+                }
 
             </ExpansionPanel>  
-    );
+    ));
 };
 
 export default PokeListItem;

@@ -16,7 +16,7 @@ const PokeDetail = props => {
         <Laoding /> :
         <div className="detail-container">
             <ExpansionPanelDetails>
-                { props.item.detail.sprites ? 
+                { props.item.detail.sprites.front_default ? 
                     <div className="poke-image-section">
                         <img 
                             src={props.item.detail.sprites.front_default} 
@@ -24,8 +24,11 @@ const PokeDetail = props => {
                             key={props.item.name} 
                             height="100px"
                         /> 
-                    </div>
-                : null }
+                    </div> : 
+                    <div className="poke-image-section not-available-img">
+                        No Image
+                    </div> 
+                }
 
                 <PokeDataTable 
                     item={props.item}

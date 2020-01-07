@@ -40,7 +40,6 @@ const PokeList = props => {
                         data.sprites,   // img
                         data.species.url    // url for species data
                         ))
-                console.log('Poke detail fetched');
             })
             .catch(err => console.log(err))
     };
@@ -65,13 +64,15 @@ const PokeList = props => {
     };
 
     const getDetailData = item => {
-        console.log(item);
         setSelectedID(item.id);
 
         fetchDetailData(item);
     };
 
     const fetchEvolChain = () => {
+        if (!evolURL) {
+            return;
+        }
 
         fetch(evolURL)
             .then(res => res.json())
@@ -105,12 +106,11 @@ const PokeList = props => {
 
     const handleChange = (panel, item) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-
         isExpanded && item.detail.length === 0 && getDetailData(item);
-
     };
 
     !!fetchedDetail && !!expanded && fetchEvolURL(fetchedDetail.speciesURL);
+
 
     return useObserver(() => (
         !!props.listData && props.listData.length > 0 ? 
@@ -122,7 +122,6 @@ const PokeList = props => {
                     handleChange={handleChange}
                     expanded={expanded}
                     selectedID={selectedID}
-
                     item={item}
                 />
             )}

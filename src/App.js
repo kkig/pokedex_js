@@ -9,7 +9,7 @@ import StoreProvider from './stores/PokeStore';
 function App() {
   return (
     <div className="App">
-        <StoreProvider>
+      <StoreProvider>
         <header className="App-header">
           <AppHeader />
         </header>

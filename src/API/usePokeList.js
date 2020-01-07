@@ -1,35 +1,40 @@
 import { useState, useContext, useEffect } from 'react';
 import StoreContext from '../stores/StoreContext';
 
-export const usePokeList = listLength => {
+export const usePokeList = () => {
     const [ fetchedList, setFetchedList ] = useState([]);
+    const [ endpoint, setEndpoint ] = useState('https://pokeapi.co/api/v2/pokemon/?limit=20');
+    const [ moreListToShow, setMoreList ] = useState(true);
     const store = useContext(StoreContext);
-    
+
+    useEffect(() => {
+        endpoint === null && setMoreList(false);
+    }, [endpoint]);
+
     // API call for pokemon list
     const fetchListData = () => {
-
-        const itemQuantity = store.PokeCount > 0 ? `offset=${store.PokeCount}&` : ``;
-        const endpoint = `https://pokeapi.co/api/v2/pokemon/?${itemQuantity}limit=20`;
-
-        console.log(endpoint);
 
         fetch(endpoint)
             .then(res => res.json())
             .then(data => {
-                data.results.length > 0 ? 
-                setFetchedList(data.results) : 
-                console.log('PokeAPI List fetch not successful');
-                
-                console.log('PokeAPI List fetched');
+                if(data.results.length > 0) {
+                    // Success
+                    setFetchedList(data.results);
+                    setEndpoint(data.next);
+                    console.log('PokeAPI List fetched');
+                } else {
+                    // No result returned
+                    console.log('PokeAPI List fetch not successful');
+                }
+
             })
             .catch(err => console.log(err));
         
     };
 
     const getListData = () => {
-        fetchListData();
+        endpoint !== null && fetchListData();
     };
-
 
     useEffect(() => {
 
@@ -41,13 +46,12 @@ export const usePokeList = listLength => {
             fetchedList.map(item => newListArray.push({...item, id: index++, detail: []}));
     
             newListArray.length > 0 && store.addNewList(newListArray);
-            setFetchedList([]);
-            
+            setFetchedList([]); 
         };
         
         fetchedList.length > 0 && addId();
 
     }, [store, fetchedList]);
     
-    return { fetchedList, getListData };
+    return { fetchedList, getListData, moreListToShow };
 };
