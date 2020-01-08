@@ -45,7 +45,7 @@ const PokeListItem = props => {
                     </Typography>
                 </ExpansionPanelSummary>
                 
-                {props.selectedName && props.item.detail !== undefined ? 
+                {props.selectedName && !!props.item.detail ? 
                 <PokeDetail 
                     selectedName={props.selectedName}
                     item={props.item}

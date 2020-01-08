@@ -27,7 +27,7 @@ const PokeDataTable = props => {
             <div className="data-row">
                 <h4 className="data-title">Type:</h4>
                 <div className="data-text">
-                    { !!props.item.detail.types ?
+                    { props.item.detail.types ?
                         props.item.detail.types.map(
                         type => <span key={ type } className="poke-detail-text">{ type }</span>) :
                         // No Data
@@ -39,7 +39,7 @@ const PokeDataTable = props => {
                 <h4 className="data-title">Stats:</h4>
                 <div className="data-text">
                     {   
-                        !!props.item.detail.stats ?
+                        props.item.detail.stats ?
                             props.item.detail.stats.slice().reverse().map(
                             item => 
                             <div 
@@ -58,7 +58,7 @@ const PokeDataTable = props => {
             <div className="data-row">
                 <h4 className="data-title">Evolution:</h4>
                 <div className="data-text">
-                    { !!props.item.detail.evolChain.evolutions ? 
+                    { props.item.detail.evolChain.evolutions ? 
                         props.item.detail.evolChain.evolutions.map(
                             pokemon => 
                                 <div key={pokemon.pokemon_name}>
@@ -76,7 +76,7 @@ const PokeDataTable = props => {
             <div className="data-row">
                 <h4 className="data-title">Ability:</h4>
                 <div className="data-text">
-                    {   !!props.item.detail.abilities ?
+                    {   props.item.detail.abilities ?
                         props.item.detail.abilities.map(
                         ability => <span key={ ability } className="poke-detail-text">{ ability }</span>) :
                         // No Data
@@ -89,7 +89,7 @@ const PokeDataTable = props => {
                 <h4 className="data-title">Move:</h4>
                 <div className="data-text">
                     {   
-                        !!props.item.detail.moves ?
+                        props.item.detail.moves ?
                         props.item.detail.moves.map(
                         move => <span key={ move } className="poke-detail-text">{ move }</span>):
                         // No Data
