@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { useObserver } from 'mobx-react';
 
@@ -18,12 +18,13 @@ const PokeList = props => {
     
     const [ expanded, setExpanded ] = useState(false);
     const [ fetchedDetail, setFetchedDetail ] = useState(null);
-    const [ selectedID, setSelectedID ] = useState(null);
+    const [ selectedItem, setselectedItem ] = useState(null);
 
     const [ evolURL, setEvolURL ] = useState(null);
 
     const store = useContext(StoreContext);
 
+    // Get detail of pokemon except evolChain data
     const fetchDetailData = item => {
         fetch(item.url)
             .then(res => res.json())
@@ -44,29 +45,32 @@ const PokeList = props => {
             .catch(err => console.log(err))
     };
 
+    // Get URL to fetch evolution data
     const fetchEvolURL = URL => {
-        const endpoint = URL;
 
-        fetch(endpoint)
+        fetch(URL)
             .then(res => res.json())
             .then(data => {
                 const fetchedEvolURL = data.evolution_chain.url;
                 const storedEvolURL = store.evolChain.filter(item => item.evolURL === fetchedEvolURL);
 
-                storedEvolURL.length > 0 ?
-                store.addDetail(selectedID, {...fetchedDetail, evolChain: storedEvolURL[0]}) : 
-                fetchEvolChain();
+                console.log({...fetchedDetail, evolChain: storedEvolURL[0]})
+                console.log(`On evol list ?: ${storedEvolURL.length > 0}`)
 
-                setEvolURL(fetchedEvolURL);
+                if(storedEvolURL.length > 0) {
+
+                    store.addDetail(selectedItem.name, {...fetchedDetail, evolChain: storedEvolURL[0]});
+                    setFetchedDetail(null);
+                    setEvolURL(null);
+
+                } else {
+
+                    setEvolURL(fetchedEvolURL);
+
+                }
                 
             })
         
-    };
-
-    const getDetailData = item => {
-        setSelectedID(item.id);
-
-        fetchDetailData(item);
     };
 
     const fetchEvolChain = () => {
@@ -98,18 +102,41 @@ const PokeList = props => {
                 const evolInfo = { evolURL: evolURL, evolutions: evoChain };
 
                 store.addEvolChain(evolInfo);
-                store.addDetail(selectedID, { ...fetchedDetail, evolChain: evolInfo });
+                store.addDetail(selectedItem.name, { ...fetchedDetail, evolChain: evolInfo });
+
+                setEvolURL(null);
 
             }) 
             .catch(err => console.log(err)) // End of fetch()
-    };
 
+    };
+    
     const handleChange = (panel, item) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-        isExpanded && item.detail.length === 0 && getDetailData(item);
+        isExpanded && item.detail.length === 0 && setselectedItem(item);
     };
 
-    !!fetchedDetail && !!expanded && fetchEvolURL(fetchedDetail.speciesURL);
+    //!!fetchedDetail && !!expanded && fetchEvolURL(fetchedDetail.speciesURL);
+    
+    /*
+    useEffect(() => {
+        evolURL !== null && selectedItem !== null && fetchEvolChain();
+    }, [evolURL])
+
+    useEffect(() => {
+        fetchedDetail !== null && selectedItem !== null && fetchEvolURL(fetchedDetail.speciesURL);
+    }, [fetchedDetail]);
+    */
+    
+    evolURL !== null && selectedItem !== null && fetchEvolChain();
+
+    fetchedDetail !== null && selectedItem !== null && fetchEvolURL(fetchedDetail.speciesURL);
+    
+
+    useEffect(() => {
+        selectedItem !== null && fetchDetailData(selectedItem);
+        selectedItem !== null && console.log(selectedItem.name)
+    }, [selectedItem]);
 
 
     return useObserver(() => (
@@ -121,7 +148,7 @@ const PokeList = props => {
                     key={item.name}
                     handleChange={handleChange}
                     expanded={expanded}
-                    selectedID={selectedID}
+                    selectedName={selectedItem ? selectedItem.name : null}
                     item={item}
                 />
             )}

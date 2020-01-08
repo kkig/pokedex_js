@@ -15,8 +15,9 @@ const StoreProvider = ({children}) => {
         get PokeCount() {
             return store.pokeData.length;
         },
-        addDetail(id, detailArray) {
-            store.pokeData[id - 1].detail = detailArray;
+        addDetail(name, detailArray) {
+            store.pokeData.filter(pokemon => pokemon.name === name)[0].detail = detailArray;
+            console.log(detailArray);
         },
         addEvolChain(newChain) {
             store.evolChain.push(newChain);

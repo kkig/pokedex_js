@@ -20,11 +20,13 @@ import Laoding from '../../../MaterialUI/Loading';
 const PokeListItem = props => {
     
     const store = useContext(StoreContext);
-    let selectedPokemon = store.pokeData.filter(item => item.id === props.selectedID)[0];
+    let selectedPokemon = store.pokeData.filter(item => item.name === props.selectedName)[0];
 
+    /*
     !!selectedPokemon && 
     props.item.id === selectedPokemon.id && 
     console.log(selectedPokemon);
+    */
     
 
     return useObserver(() => (
@@ -43,9 +45,9 @@ const PokeListItem = props => {
                     </Typography>
                 </ExpansionPanelSummary>
                 
-                {props.selectedID ? 
+                {props.selectedName && props.item.detail !== undefined ? 
                 <PokeDetail 
-                    selectedID={props.selectedID}
+                    selectedName={props.selectedName}
                     item={props.item}
                 /> :
                 <Laoding />
