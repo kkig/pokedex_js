@@ -17,7 +17,6 @@ const StoreProvider = ({children}) => {
         },
         addDetail(name, detailArray) {
             store.pokeData.filter(pokemon => pokemon.name === name)[0].detail = detailArray;
-            console.log(detailArray);
         },
         addEvolChain(newChain) {
             store.evolChain.push(newChain);

@@ -2,36 +2,52 @@ import React from 'react';
 
 import './PokeDataTable.css';
 
-const PokeDataTable = props => {
-    //props.item.detail.evolChain && console.log(props.item.detail.evolChain.evolutions);
+const PokeDataTable = ({ item }) => {
 
     return (
         <div className="pokemon-info-table">
             <div className="data-row">
-                <h4 className="data-title">Name:</h4>
+                <h4 className="data-title">
+                    Name:
+                </h4>
                 <div className="data-text">
-                    { props.item.detail.name ? props.item.detail.name : 
-                        <span className="not-avairable-text">Not Available</span>}
+                    { item.detail.name ? item.detail.name : 
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-name"
+                        >
+                            Not Available
+                        </span>}
                 </div>
             </div>
 
             <div className="data-row">
                 <h4 className="data-title">Order No:</h4>
                 <div className="data-text">
-                    { props.item.detail.orderNr ? props.item.detail.orderNr :
+                    { item.detail.orderNr ? item.detail.orderNr :
                         // No Data
-                        <span className="not-avairable-text">Not Available</span>}
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-orderNr"
+                        >
+                            Not Available
+                        </span>}
                 </div>
             </div>
 
             <div className="data-row">
                 <h4 className="data-title">Type:</h4>
                 <div className="data-text">
-                    { props.item.detail.types ?
-                        props.item.detail.types.map(
+                    { item.detail.types ?
+                        item.detail.types.map(
                         type => <span key={ type } className="poke-detail-text">{ type }</span>) :
                         // No Data
-                        <span className="not-avairable-text">Not Available</span> }
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-types"
+                        >
+                            Not Available
+                        </span> }
                 </div>
             </div>
 
@@ -39,8 +55,8 @@ const PokeDataTable = props => {
                 <h4 className="data-title">Stats:</h4>
                 <div className="data-text">
                     {   
-                        props.item.detail.stats ?
-                            props.item.detail.stats.slice().reverse().map(
+                        item.detail.stats ?
+                            item.detail.stats.slice().reverse().map(
                             item => 
                             <div 
                                 key={ item.stat.name } 
@@ -50,7 +66,12 @@ const PokeDataTable = props => {
                             </div>
                             ) :
                             // No Data
-                            <span className="not-avairable-text">Not Available</span>
+                            <span 
+                                className="not-avairable-text"
+                                data-testid="table-pokemon-stat"
+                            >
+                                    Not Available
+                            </span>
                     }                        
                 </div>
             </div>
@@ -58,8 +79,8 @@ const PokeDataTable = props => {
             <div className="data-row">
                 <h4 className="data-title">Evolution:</h4>
                 <div className="data-text">
-                    { props.item.detail.evolChain.evolutions ? 
-                        props.item.detail.evolChain.evolutions.map(
+                    { item.detail.evolChain && item.detail.evolChain.evolutions ? 
+                        item.detail.evolChain.evolutions.map(
                             pokemon => 
                                 <div key={pokemon.pokemon_name}>
                                     { pokemon.pokemon_name } 
@@ -68,7 +89,12 @@ const PokeDataTable = props => {
                                     </span>
                                 </div>) :
                         // No Data
-                        <span className="not-avairable-text">Not Available</span>
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-evolution"
+                        >
+                            Not Available
+                        </span>
                     }
                 </div>
             </div>
@@ -76,11 +102,16 @@ const PokeDataTable = props => {
             <div className="data-row">
                 <h4 className="data-title">Ability:</h4>
                 <div className="data-text">
-                    {   props.item.detail.abilities ?
-                        props.item.detail.abilities.map(
+                    {   item.detail.abilities ?
+                        item.detail.abilities.map(
                         ability => <span key={ ability } className="poke-detail-text">{ ability }</span>) :
                         // No Data
-                        <span className="not-avairable-text">Not Available</span>
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-ability"
+                        >
+                            Not Available
+                        </span>
                     }
                 </div>
             </div>
@@ -89,11 +120,16 @@ const PokeDataTable = props => {
                 <h4 className="data-title">Move:</h4>
                 <div className="data-text">
                     {   
-                        props.item.detail.moves ?
-                        props.item.detail.moves.map(
+                        item.detail.moves ?
+                        item.detail.moves.map(
                         move => <span key={ move } className="poke-detail-text">{ move }</span>):
                         // No Data
-                        <span className="not-avairable-text">Not Available</span>
+                        <span 
+                            className="not-avairable-text"
+                            data-testid="table-pokemon-move"
+                        >
+                            Not Available
+                        </span>
                     }
                 </div>
             </div>

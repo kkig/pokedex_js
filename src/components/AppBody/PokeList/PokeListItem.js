@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { useObserver } from 'mobx-react';
 
@@ -7,27 +7,13 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/Button';
 
 // Component
 import PokeDetail from './PokeListItem/PokeDetails';
 import './PokeListItem.css';
 
-import StoreContext from '../../../stores/StoreContext';
-
-// Material UI
-import Laoding from '../../../MaterialUI/Loading';
-
 const PokeListItem = props => {
-    
-    const store = useContext(StoreContext);
-    let selectedPokemon = store.pokeData.filter(item => item.name === props.selectedName)[0];
-
-    /*
-    !!selectedPokemon && 
-    props.item.id === selectedPokemon.id && 
-    console.log(selectedPokemon);
-    */
-    
 
     return useObserver(() => (
         <ExpansionPanel 
@@ -45,13 +31,20 @@ const PokeListItem = props => {
                     </Typography>
                 </ExpansionPanelSummary>
                 
-                {props.selectedName && !!props.item.detail ? 
+
                 <PokeDetail 
-                    selectedName={props.selectedName}
                     item={props.item}
-                /> :
-                <Laoding />
-                }
+                /> 
+
+                <div className="close-btn-container">
+                    <Button 
+                        className="close-btn-text"
+                        color="primary"
+                        onClick={props.handleBtnClick}
+                    >
+                        Close
+                    </Button>
+                </div>
 
             </ExpansionPanel>  
     ));

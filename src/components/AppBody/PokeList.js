@@ -14,7 +14,7 @@ import StoreContext from '../../stores/StoreContext';
 // Material UI
 import Laoding from '../../MaterialUI/Loading';
 
-const PokeList = props => {
+const PokeList = ({ listData }) => {
     
     const [ expanded, setExpanded ] = useState(false);
     const [ fetchedDetail, setFetchedDetail ] = useState(null);
@@ -23,138 +23,142 @@ const PokeList = props => {
     const [ evolURL, setEvolURL ] = useState(null);
 
     const store = useContext(StoreContext);
-
-    // Get detail of pokemon except evolChain data
-    const fetchDetailData = item => {
-        fetch(item.url)
-            .then(res => res.json())
-            .then(data => {
-                setFetchedDetail(
-                    new PokeDetail(
-                        data.id,    // id
-                        data.name,  // name
-                        data.order, // orderNr
-                        data.types.map(item => item.type.name), // type
-                        data.abilities.map(item => item.ability.name),  // abilities
-                        data.stats, // stats
-                        data.moves.map(item => item.move.name), // moves
-                        data.sprites,   // img
-                        data.species.url    // url for species data
-                        ))
-            })
-            .catch(err => console.log(err))
-    };
-
-    // Get URL to fetch evolution data
-    const fetchEvolURL = URL => {
-
-        fetch(URL)
-            .then(res => res.json())
-            .then(data => {
-                const fetchedEvolURL = data.evolution_chain.url;
-                const storedEvolURL = store.evolChain.filter(item => item.evolURL === fetchedEvolURL);
-
-                console.log({...fetchedDetail, evolChain: storedEvolURL[0]})
-                console.log(`On evol list ?: ${storedEvolURL.length > 0}`)
-
-                if(storedEvolURL.length > 0) {
-
-                    store.addDetail(selectedItem.name, {...fetchedDetail, evolChain: storedEvolURL[0]});
-                    setFetchedDetail(null);
-                    setEvolURL(null);
-
-                } else {
-
-                    setEvolURL(fetchedEvolURL);
-
-                }
-                
-            })
-        
-    };
-
-    const fetchEvolChain = () => {
-        if (!evolURL) {
-            return;
-        }
-
-        fetch(evolURL)
-            .then(res => res.json())
-            .then(data => {
-                const chainData = data.chain;
-
-                let evoChain = [];
-                let evoData = chainData;
-                    
-                do {
-                    let evoDetails = evoData['evolution_details'][0];
-                    
-                    evoChain.push({
-                        "pokemon_name": evoData.species.name,
-                        "min_level": !evoDetails ? 1 : evoDetails.min_level,
-                        "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
-                        "item": !evoDetails ? null : evoDetails.item
-                    });
-                    
-                    evoData = evoData['evolves_to'][0];
-                } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-
-                const evolInfo = { evolURL: evolURL, evolutions: evoChain };
-
-                store.addEvolChain(evolInfo);
-                store.addDetail(selectedItem.name, { ...fetchedDetail, evolChain: evolInfo });
-
-                setEvolURL(null);
-
-            }) 
-            .catch(err => console.log(err)) // End of fetch()
-
-    };
     
     const handleChange = (panel, item) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
         isExpanded && item.detail.length === 0 && setselectedItem(item);
     };
 
-    //!!fetchedDetail && !!expanded && fetchEvolURL(fetchedDetail.speciesURL);
-    
-    /*
-    useEffect(() => {
-        evolURL !== null && selectedItem !== null && fetchEvolChain();
-    }, [evolURL])
+    const handleBtnClick = () => {
+        setExpanded(false);
+    };
 
     useEffect(() => {
-        fetchedDetail !== null && selectedItem !== null && fetchEvolURL(fetchedDetail.speciesURL);
-    }, [fetchedDetail]);
-    */
-    
-    evolURL !== null && selectedItem !== null && fetchEvolChain();
+        // Get detail of pokemon except evolChain data
+        const fetchDetailData = item => {
+            fetch(item.url)
+                .then(res => res.json())
+                .then(data => {
+                    setFetchedDetail(
+                        new PokeDetail(
+                            data.id,    // id
+                            data.name,  // name
+                            data.order, // orderNr
+                            data.types.map(item => item.type.name), // type
+                            data.abilities.map(item => item.ability.name),  // abilities
+                            data.stats, // stats
+                            data.moves.map(item => item.move.name), // moves
+                            data.sprites,   // img
+                            data.species.url    // url for species data
+                            ))
+                })
+                .catch(err => console.log(err))
+        };
 
-    fetchedDetail !== null && selectedItem !== null && fetchEvolURL(fetchedDetail.speciesURL);
-    
-
-    useEffect(() => {
         selectedItem !== null && fetchDetailData(selectedItem);
-        selectedItem !== null && console.log(selectedItem.name)
     }, [selectedItem]);
 
 
-    return useObserver(() => (
-        !!props.listData && props.listData.length > 0 ? 
+    // Get URL required to get evolChain data
+    useEffect(() => {
 
-        (<div>
-            {props.listData.map(item => 
+        const fetchEvolURL = async URL => {
+            const pokemonDetail = await fetchedDetail;
+
+            fetch(URL)
+                .then(res => res.json())
+                .then(data => {
+                    const fetchedEvolURL = data.evolution_chain.url;
+                    const storedEvolURL = store.evolChain.filter(item => item.evolURL === fetchedEvolURL);
+
+                    if(storedEvolURL.length > 0) {
+
+                        // Get evolChain from MobX data
+                        store.addDetail(selectedItem.name, {...pokemonDetail, evolChain: storedEvolURL[0]});
+
+                        setEvolURL(null);
+                        setFetchedDetail(null);
+
+                    } else {
+
+                        // Set evolURL to make API request
+                        setEvolURL(fetchedEvolURL);
+
+                    }
+                    
+                })
+                .catch(err => console.log(`Error fetching evolution chain: ${err}`))
+            
+        };        
+
+        fetchedDetail !== null && selectedItem !== null && fetchEvolURL(fetchedDetail.speciesURL);
+
+    }, [store, fetchedDetail, selectedItem]);
+
+    useEffect(() => {
+        // Get data for possible evolution
+        const fetchEvolChain = async () => {
+
+            const evolChainURL = await evolURL;
+
+            fetch(evolChainURL)
+                .then(res => res.json())
+                .then(data => {
+                    const chainData = data.chain;
+
+                    let evoChain = [];
+                    let evoData = chainData;
+                    
+                    // Get all possible pokemons for evolution
+                    do {
+                        let evoDetails = evoData['evolution_details'][0];
+                        
+                        evoChain.push({
+                            "pokemon_name": evoData.species.name,
+                            "min_level": !evoDetails ? 1 : evoDetails.min_level,
+                            "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
+                            "item": !evoDetails ? null : evoDetails.item
+                        });
+                        
+                        evoData = evoData['evolves_to'][0];
+                    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+
+                    const evolInfo = { evolURL: evolChainURL, evolutions: evoChain };
+
+                    // Update data on mobX
+                    store.addEvolChain(evolInfo);
+                    store.addDetail(selectedItem.name, { ...fetchedDetail, evolChain: evolInfo });
+
+                    // Reset URL value
+                    setEvolURL(null);
+                    setFetchedDetail(null);
+
+                }) 
+                .catch(err => console.log(err)) // End of fetch()
+
+        };
+
+        evolURL !== null && selectedItem !== null && fetchEvolChain();
+
+    }, [store, evolURL, fetchedDetail, selectedItem]);
+
+    return useObserver(() => (
+        !!listData && listData.length > 0 ? 
+
+        <div>
+            {listData.map(item => 
                 <PokeListItem 
                     key={item.name}
                     handleChange={handleChange}
                     expanded={expanded}
                     selectedName={selectedItem ? selectedItem.name : null}
                     item={item}
+                    handleBtnClick={handleBtnClick}
                 />
             )}
-        </div> ):
+        </div> :
 
-        <Laoding /> 
+        <Laoding data-testid="list-loading-icon"/> 
     ));
 };
 

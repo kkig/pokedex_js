@@ -9,33 +9,40 @@ import Laoding from '../../../../MaterialUI/Loading';
 
 import { useObserver } from 'mobx-react';
 
-const PokeDetail = props => {
+const PokeDetail = ({ item }) => {
 
     return useObserver(() => (  
-        props.item.detail.length === 0 ?
-        <Laoding /> :
-        <div className="detail-container">
-            <ExpansionPanelDetails>
-                { props.item.detail.sprites !== undefined && props.item.detail.sprites.front_default ? 
-                    <div className="poke-image-section">
-                        <img 
-                            src={props.item.detail.sprites.front_default} 
-                            alt={props.item.name} 
-                            key={props.item.name} 
-                            height="100px"
-                        /> 
-                    </div> : 
+        
+        <div className="detail-container" data-testid="detail-container">
+            {   
+                !!item.detail && item.detail.length !== 0 ?
 
-                    <div className="poke-image-section not-available-img">
-                        No Image
-                    </div> 
-                }
+                <ExpansionPanelDetails data-testid="pokemon-details">
+                    { item.detail.sprites !== undefined && item.detail.sprites.front_default ? 
+                        <div className="poke-image-section">
+                            <img 
+                                src={item.detail.sprites.front_default} 
+                                alt={item.name} 
+                                key={item.name} 
+                                height="100px"
+                            /> 
+                        </div> : 
 
-                <PokeDataTable 
-                    item={props.item}
-                />
+                        <div className="poke-image-section not-available-img">
+                            No Image
+                        </div> 
+                    }
 
-            </ExpansionPanelDetails>
+                    <PokeDataTable 
+                        item={item}
+                    />
+
+                </ExpansionPanelDetails> :
+                <code data-testid="icon-loading-detail">
+                    <Laoding />
+                </code>
+
+            }
         </div>
 
     ));
