@@ -7,7 +7,7 @@
 .data-title {
     padding-right: 1em;
     margin-bottom: 0;
-    justify-self: start;
+    letter-spacing: .075em;
 }
 
 .data-text {
@@ -20,7 +20,11 @@
 
 .poke-detail-text {
     display: inline-block;
-    padding-right: 1em;
+}
+
+.detail-list:not(:last-child):after { 
+    content: ',';
+    padding-right: .75em;
 }
 
 .poke-stat-detail {

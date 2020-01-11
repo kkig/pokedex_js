@@ -39,8 +39,11 @@ const PokeDataTable = ({ item }) => {
                 <h4 className="data-title">Type:</h4>
                 <div className="data-text">
                     { item.detail.types ?
-                        item.detail.types.map(
-                        type => <span key={ type } className="poke-detail-text">{ type }</span>) :
+                        item.detail.types.map( type => 
+                            <span key={ type } className="poke-detail-text detail-list">
+                                { type }
+                            </span>) :
+
                         // No Data
                         <span 
                             className="not-avairable-text"
@@ -103,8 +106,11 @@ const PokeDataTable = ({ item }) => {
                 <h4 className="data-title">Ability:</h4>
                 <div className="data-text">
                     {   item.detail.abilities ?
-                        item.detail.abilities.map(
-                        ability => <span key={ ability } className="poke-detail-text">{ ability }</span>) :
+                        item.detail.abilities.map( ability => 
+                            <span key={ ability } className="poke-detail-text detail-list">
+                                { ability }
+                            </span>) :
+
                         // No Data
                         <span 
                             className="not-avairable-text"
@@ -121,8 +127,10 @@ const PokeDataTable = ({ item }) => {
                 <div className="data-text">
                     {   
                         item.detail.moves ?
-                        item.detail.moves.map(
-                        move => <span key={ move } className="poke-detail-text">{ move }</span>):
+                        item.detail.moves.map( move => 
+                            <span key={ move } className="poke-detail-text detail-list">
+                                { move }
+                            </span>):
                         // No Data
                         <span 
                             className="not-avairable-text"

@@ -2,6 +2,7 @@ p.poke-list-title {
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: .075em;
+    font-family: var(--title-font);
 }
 
 .close-btn-container {
