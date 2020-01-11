@@ -88,7 +88,10 @@ const PokeDataTable = ({ item }) => {
                                 <div key={pokemon.pokemon_name}>
                                     { pokemon.pokemon_name } 
                                     <span className="evo-level-text"> 
-                                        (Lv. { pokemon.min_level })
+                                        { pokemon.trigger_name === "use-item" ?
+                                        `(Item: ${pokemon.item.name})` :
+                                        `(Lv. ${pokemon.min_level ? pokemon.min_level : '-'})`
+                                        }
                                     </span>
                                 </div>) :
                         // No Data

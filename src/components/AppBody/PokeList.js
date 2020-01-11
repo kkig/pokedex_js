@@ -124,6 +124,7 @@ const PokeList = ({ listData }) => {
                     } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
 
                     const evolInfo = { evolURL: evolChainURL, evolutions: evoChain };
+                    console.log(evolInfo);
 
                     // Update data on mobX
                     store.addEvolChain(evolInfo);
