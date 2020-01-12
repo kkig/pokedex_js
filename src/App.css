@@ -45,3 +45,7 @@ h1 {
   grid-column: 1 / -1;
 }
 */
+
+button.MuiButton-root {
+  font-family: var(--title-font);
+}
