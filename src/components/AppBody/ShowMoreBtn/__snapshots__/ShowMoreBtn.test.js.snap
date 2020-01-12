@@ -7,7 +7,7 @@ exports[`renders 1`] = `
     data-testid="btn-container"
   >
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained more-btn MuiButton-containedPrimary"
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained more-btn"
       data-testid="show-more-btn"
       tabindex="0"
       type="button"

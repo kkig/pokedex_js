@@ -4,6 +4,13 @@
     padding: 1em 0;
 }
 
-.more-btn:hover {
+button.more-btn {
     color: white;
+    background-color: royalblue;
+    border-radius: 8px;
+}
+
+button.more-btn:hover {
+    color: white;
+    background-color: lightsteelblue;
 }

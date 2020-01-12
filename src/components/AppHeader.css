@@ -2,3 +2,7 @@
     text-align: center;
     padding: 2.5em 0;
 }
+
+.app-title-texts > h1 {
+    letter-spacing: .075em;
+}

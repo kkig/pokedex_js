@@ -16,7 +16,6 @@ const ShowMoreBtn = ({ endpoint, handleClick }) => {
                 endpoint !== null ? 
             <Button 
                 variant="contained" 
-                color="primary" 
                 className="more-btn"
                 data-testid="show-more-btn"
                 onClick={handleClick}
