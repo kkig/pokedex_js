@@ -24,7 +24,6 @@ const PokeDetail = ({ item }) => {
                                 src={item.detail.sprites.front_default} 
                                 alt={item.name} 
                                 key={item.name} 
-                                height="100px"
                             /> 
                         </div> : 
 

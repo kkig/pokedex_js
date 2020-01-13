@@ -13,34 +13,34 @@ import Button from '@material-ui/core/Button';
 import PokeDetail from './PokeListItem/PokeDetails';
 import './PokeListItem.css';
 
-const PokeListItem = props => {
+const PokeListItem = ({ expanded, item, handleChange, handleBtnClick  }) => {
 
     return useObserver(() => (
         <ExpansionPanel 
-            expanded={props.expanded === `panel${props.item.name}`} 
-            onChange={props.handleChange(`panel${props.item.name}`, props.item)}
+            expanded={expanded === `panel${item.name}`} 
+            onChange={handleChange(`panel${item.name}`, item)}
         >
                 <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls={`panel${props.item.name}bh-content`}
+                    aria-controls={`panel${item.name}bh-content`}
                     className="poke-list-name"
-                    id={`panel${props.item.name}bh-header`}
+                    id={`panel${item.name}bh-header`}
                 >
                     <Typography className="poke-list-title">
-                        { props.item.name }
+                        { item.name }
                     </Typography>
                 </ExpansionPanelSummary>
                 
 
                 <PokeDetail 
-                    item={props.item}
+                    item={item}
                 /> 
 
                 <div className="close-btn-container">
                     <Button 
                         className="close-btn-text"
                         color="primary"
-                        onClick={props.handleBtnClick}
+                        onClick={handleBtnClick}
                     >
                         Close
                     </Button>

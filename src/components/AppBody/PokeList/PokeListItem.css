@@ -3,6 +3,7 @@ p.poke-list-title {
     font-weight: 600;
     letter-spacing: .075em;
     font-family: var(--title-font);
+    color: var(--basic-text-color);
 }
 
 .close-btn-container {

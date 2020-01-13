@@ -11,7 +11,10 @@ const PokeDataTable = ({ item }) => {
                     Name:
                 </h4>
                 <div className="data-text">
-                    { item.detail.name ? item.detail.name : 
+                    { item.detail.name ? 
+
+                        item.detail.name : 
+                        
                         <span 
                             className="not-avairable-text"
                             data-testid="table-pokemon-name"
@@ -24,7 +27,10 @@ const PokeDataTable = ({ item }) => {
             <div className="data-row">
                 <h4 className="data-title">Order No:</h4>
                 <div className="data-text">
-                    { item.detail.orderNr ? item.detail.orderNr :
+                    { item.detail.orderNr ? 
+
+                        item.detail.orderNr :
+
                         // No Data
                         <span 
                             className="not-avairable-text"
@@ -39,6 +45,7 @@ const PokeDataTable = ({ item }) => {
                 <h4 className="data-title">Type:</h4>
                 <div className="data-text">
                     { item.detail.types ?
+
                         item.detail.types.map( type => 
                             <span key={ type } className="poke-detail-text detail-list">
                                 { type }
@@ -59,6 +66,7 @@ const PokeDataTable = ({ item }) => {
                 <div className="data-text">
                     {   
                         item.detail.stats ?
+
                             item.detail.stats.slice().reverse().map(
                             item => 
                             <div 
@@ -68,6 +76,7 @@ const PokeDataTable = ({ item }) => {
                                 { item.stat.name } / { item.base_stat }
                             </div>
                             ) :
+
                             // No Data
                             <span 
                                 className="not-avairable-text"
@@ -134,6 +143,7 @@ const PokeDataTable = ({ item }) => {
                             <span key={ move } className="poke-detail-text detail-list">
                                 { move }
                             </span>):
+
                         // No Data
                         <span 
                             className="not-avairable-text"

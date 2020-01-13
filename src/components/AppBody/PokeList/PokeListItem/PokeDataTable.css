@@ -1,3 +1,7 @@
+.pokemon-info-table {
+    color: var(--basic-text-color);
+}
+
 .data-row {
     display: grid;
     grid-template-columns: 1fr;

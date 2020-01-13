@@ -151,7 +151,6 @@ const PokeList = ({ listData }) => {
                     key={item.name}
                     handleChange={handleChange}
                     expanded={expanded}
-                    selectedName={selectedItem ? selectedItem.name : null}
                     item={item}
                     handleBtnClick={handleBtnClick}
                 />
